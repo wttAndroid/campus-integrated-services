@@ -1,0 +1,49 @@
+
+.background-wrap{
+		    position: absolute;
+		    top: 100rpx;
+		    left: 50%;
+		    transform: translateX(-50%);
+		    width: 60%;
+}
+
+.form-wrap{
+		width: 80%;
+		radius: 50rpx;
+		/* margin: 55% auto 0; */
+		.form-item{
+			display: flex;
+			align-items: center;
+			height: 80rpx;
+			line-height: 80rpx;
+			background: #f9fbfd;
+			padding: 20rpx;
+			label{
+				width: 85rpx;
+				text-align: center;
+				.iconfont{
+					font-size: 39rpx;
+					color: $uni-them-font-color;
+				}
+			}
+			input{
+				flex: 1;
+			}
+		}
+		
+		.submit-button{
+			height: 90rpx;
+			line-height: 90rpx;
+			margin: 20rpx 0;
+			font-size: $uni-font-size-lg;
+			color: $uni-text-color-inverse;
+			background-color: $uni-theme-bg-color;
+			border-radius: 50rpx;
+		}
+		
+	}
+	.login-other-wrap{
+		display: flex;
+		justify-content: center;
+		color: $uni-text-color-grey;
+	}
