@@ -10,4 +10,4 @@ uniapp用于促进高校学生社交以及互帮互助的小程序
 部分页面：课程表跑腿文章聊天页疫情防控
 
 
-![页面整合](static/icon/%E7%94%BB%E6%9D%BF.png)
+![页面整合](static/icon/%E6%A0%A1%E5%9B%AD.png))
