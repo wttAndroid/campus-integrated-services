@@ -13,7 +13,8 @@
 			<view class="info-content">
 				{{articleInfo.title}}
 				<image :src="articleInfo.cover_img"></image>
-				{{articleInfo.content||''}}
+				<rich-text style="word-break: break-word;" :nodes="articleInfo.content||''"></rich-text>
+				
 			</view>
 			<view style="text-align: right;">
 				<view @click="addComment(articleInfo.id)" class="tag iconfont icon-icon_xiaoxi_1"></view>
@@ -79,7 +80,9 @@
 				artinfoList:[],
 				articleInfo:null,
 				sendParams:{},
-				type:1
+				type:1,
+				total:0,
+				pagenum:0
 			};
 		},
 		computed:{
@@ -139,16 +142,28 @@
 			},
 			clickTab(id){
 				this.activeTab=id;
+				this.init();
 				this.getChiceInfo();
 			},
+			init(){
+				this.pagenum=0;
+				this.total=0;
+				this.artinfoList=[]
+			},
 			async getChiceInfo(){
-				let {data}=await uni.$http.get('/api/article/art/getbyw?aid='+this.aid+'&sort='+this.activeTab);
+				if(this.total<this.pagenum*10)return uni.$showMsg('已经加载到底部了！');
+				this.pagenum=this.pagenum+1 //更换当前页数
+				
+				let {data}=await uni.$http.get('/api/article/art/getbyw?aid='+this.aid+'&sort='+this.activeTab+'&pagenum='+this.pagenum);
 				if(data.code!=200)return uni.$showMsg();
-				data.data.map(item=>{
+				let {total,list}=data.data;
+				
+				list.map(item=>{
 					item.user_pic=uni.$http.baseUrl+item.user_pic;
 					return item;
 				})
-				this.artinfoList=data.data;
+				this.artinfoList=list;
+				this.total=total;
 			},
 			async getArticleLs(){
 				let {data}=await uni.$http.get('/api/article/art/getbyid?id='+this.aid);
@@ -160,6 +175,9 @@
 				})
 				this.articleInfo=data.data[0];
 			}
+		},
+		onReachBottom() {
+			this.getChiceInfo();
 		},
 		onLoad(options) {
 			this.aid=options.id

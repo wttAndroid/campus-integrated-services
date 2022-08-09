@@ -91,7 +91,7 @@ const chat={
 			// context.dispatch('getchatlist',payload.uid)
 		},
 		online(context,payload){
-			console.log("--------有人上线了--------"+payload)
+			console.log("--有人上线了--"+payload)
 			context.commit('_online',payload)
 		}
 	},

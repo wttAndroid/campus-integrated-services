@@ -106,7 +106,6 @@
 					return m2.create_time>m1.create_time
 				});
 				
-				
 				this.$set(this,'userList',that.chatlist.users)
 				this.$set(this,'lastMsglist',lastMsg)
 				

@@ -3,8 +3,8 @@
 		<home-moktitle title="今日资讯" date="01.29" link="/subpkg/subpkg_infor/subpkg_infor"></home-moktitle>
 		<view class="infor-list">
 			<view class="infor-item" v-for="item in infoList" @click="navigateTo(item.id)" :key="item.id">
-				<view>
-					<text v-if="item.tag>1" class="infor-tag">{{getTag(item.tag)}}</text>
+				<view style="display: flex;">
+					<text v-if="item.tag>0" :class="['infor-tag',item.tag>1?'tag':'']">{{getTag(item.tag)}}</text>
 					<text class="infor-title">{{item.title}}</text>
 				</view>
 				<text class="infor-text">{{item.hover}}</text>
@@ -23,9 +23,9 @@
 		computed:{
 			getTag(){
 				return function(tag){
-					if(tag==1) return ''
-					if(tag==2) return '热门'
-					if(tag==3) return '置顶'
+					if(tag==2) return '置顶'
+					if(tag==1) return '热门'
+					if(tag==0) return ''
 				}
 			}
 		},
@@ -60,11 +60,16 @@
 				padding: 1rpx 5rpx;
 				margin-right: 8rpx;
 				color: $uni-text-color-inverse;
-				border-top-left-radius: 12rpx;
-				border-bottom-right-radius: 12rpx;
+				border-top-left-radius: 20rpx;
+				border-bottom-right-radius: 20rpx;
 				font-size: $uni-font-size-sm;
+				
+				&.tag{
+					background-color: $uni-bg-color-tagg;
+				}
 			}
 			.infor-title{
+				flex: 1;
 					text-overflow: ellipsis;
 				    word-break: break-all;
 				    overflow: hidden;

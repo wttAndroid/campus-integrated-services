@@ -5,15 +5,15 @@
 				
 		<scroll-view class="top-group-wrap" scroll-x="true">
 				<view class="group-item" v-for="item in groupList" :key="item.id" @click="navigateTo(item.server_path)">
-					<image :src="item.icon" mode="widthFix"></image>
+					<image :src="item.server_icon" mode="widthFix"></image>
 					<text>{{item.server_name}}</text>
 				</view>
 		</scroll-view>
 		
-		<home-choiceness></home-choiceness>
-		<home-margin-bar></home-margin-bar>
-		<home-information></home-information>
-		<home-margin-bar></home-margin-bar>
+		<home-choiceness  v-if="resetTop"></home-choiceness>
+		<home-margin-bar  v-if="resetTop"></home-margin-bar>
+		<home-information v-if="resetTop"></home-information>
+		<home-margin-bar  v-if="resetTop"></home-margin-bar>
 	</view>
 </template>
 
@@ -38,7 +38,7 @@
 				let {data}=await uni.$http.get('/api/server/get');
 				if(data.code!=200)return uni.$showMsg();
 				this.groupList=data.data.map(item=>{
-					item['icon']=uni.$http.baseUrl+'/'+item.icon_name;
+					item['server_icon']=uni.$http.baseUrl+item.server_icon;
 					return item
 				})
 				callback&&callback()

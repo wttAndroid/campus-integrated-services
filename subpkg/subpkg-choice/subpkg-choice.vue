@@ -8,7 +8,7 @@
 			<scroll-view class="scroll-wrap left" scroll-y="true">
 				<view v-for="item in cateList" :key="item.id" :class="['scroll-item',item.id==active?'active':'']" @click="setActive(item.id)">{{item.name}}</view>
 			</scroll-view>
-			<scroll-view class="scroll-wrap right" scroll-y="true">
+			<scroll-view class="scroll-wrap right" scroll-y="true" @scrolltolower="scrolltolowerEvent">
 				<view class="scroll-item" v-for="item in articleList" :key="item.id" @click="navigateTo(item.id)">
 					<image :src="item.cover_img" ></image>
 					<view class="choice-item-right">
@@ -51,24 +51,32 @@
 				this.getCateList();
 			},
 			async inputEvent(e){
-				this.active=-1;
-				let {data}=await uni.$http.get('/api/article/ls/search?query='+e.value);
-				if(data.code!=200)return uni.$showMsg();
-				let {total,list}=data.data;
-				this.articleList=list.map(item=>{
-					item.cover_img=uni.$http.baseUrl+item.cover_img;
-					return item;
-				})
-				this.total=total;//一共多少条
+				if(e.value){
+					this.active=-1;
+					let {data}=await uni.$http.get('/api/article/ls/search?query='+e.value);
+					if(data.code!=200)return uni.$showMsg();
+					let {total,list}=data.data;
+					this.articleList=list.map(item=>{
+						item.cover_img=uni.$http.baseUrl+item.cover_img;
+						return item;
+					})
+					this.total=total;//一共多少条
+				}
 			},
 			setActive(index){
 				this.active=index;
+				this.init();
 				this.getArticleLs(index);
 			},
 			navigateTo(id){
 				uni.navigateTo({
 					url:'/subpkg/subpkg-choice/choice_info/choice_info?id='+id
 				})
+			},
+			init(){
+				this.pagenum=0;
+				this.total=0;
+				this.articleList=[]
 			},
 			async getCateList(){
 				let {data}=await uni.$http.get('/api/article/cate/get')
@@ -79,24 +87,39 @@
 				}
 			},
 			async getArticleLs(cid){
-				let {data}=await uni.$http.get('/api/article/ls/get?cid='+cid);
-				if(data.code!=200)return uni.$showMsg();
-				this.articleList=data.data.map(item=>{
-					item.cover_img=uni.$http.baseUrl+item.cover_img;
-					return item;
-				})
-			},
-			async scrolltolowerEvent(){
 				if(this.total<this.pagenum*10)return uni.$showMsg('已经加载到底部了！');
 				this.pagenum=this.pagenum+1 //更换当前页数
-				let {data}=await uni.$http.get('/api/article/ls/search?query='+this.searchValue+'&pagenum='+this.pagenum);
+				
+				let {data}=await uni.$http.get('/api/article/ls/get?is_show=1&is_delete=0&cid='+cid+'&pagenum='+this.pagenum);
 				if(data.code!=200)return uni.$showMsg();
 				let {total,list}=data.data;
 				let list2=list.map(item=>{
 					item.cover_img=uni.$http.baseUrl+item.cover_img;
 					return item;
 				})
+				this.articleList=[...this.articleList,...list2]
+				this.total=total;//一共多少条
+			},
+			async scrolltolowerEvent(){
+				if(this.total<this.pagenum*10)return uni.$showMsg('已经加载到底部了！');
+				this.pagenum=this.pagenum+1; //更换当前页数
 				
+				//搜索查询
+				let datas=[]
+				if(this.searchValue){
+					let {data}=await uni.$http.get('/api/article/ls/search?query='+this.searchValue+'&pagenum='+this.pagenum);
+					datas=data;
+					
+				}else{
+					let {data}=await uni.$http.get('/api/article/ls/get?is_show=1&is_delete=0&cid='+cid+'&pagenum='+this.pagenum);
+					datas=data;
+				}
+				if(datas.code!=200)return uni.$showMsg();
+				let {total,list}=datas.data;
+				let list2=list.map(item=>{
+					item.cover_img=uni.$http.baseUrl+item.cover_img;
+					return item;
+				})
 				this.articleList=[...this.articleList,...list2]
 				this.total=total;//一共多少条
 			}

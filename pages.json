@@ -131,7 +131,10 @@
 				},
 				{
 					"path":"subpkg-choice/choice_info/choice_info",
-					"style":{}
+					"style":{
+						"enablePullDownRefresh":true,
+						"onReachBottomDistance":100
+					}
 				},
 				{
 					"path":"subpkg-choice/choice_info/choice_add",

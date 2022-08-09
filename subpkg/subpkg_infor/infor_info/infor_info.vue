@@ -8,9 +8,10 @@
 						<view class="hover">
 							{{infopage.hover}} 	
 						</view>
+						<image :src="infopage.cover_img" mode="widthFix"></image>
 						<view class="text-content">
 							<rich-text :nodes="infopage.content"></rich-text>
-							<image :src="infopage.cover_img" mode="widthFix"></image>
+							
 						</view> 
 					</view> 	
 		 </view>

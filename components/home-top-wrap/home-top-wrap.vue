@@ -29,7 +29,7 @@
 						</view>
 					</swiper-item>
 				</block>
-				<block>
+				<block v-else>
 					<swiper-item >
 						<view class="swiper-item">
 							<image src="http://123.56.144.92:8883/banner.jpeg" mode="scaleToFill"></image>
@@ -72,8 +72,8 @@
 				})
 			},
 			//轮播图列表
-			async getSwitchList(){
-				let {data}=await uni.$http.get('/api/public/banner/get?is_show=1&open_type=HOMETOP&start_time='+new Date().Format());
+			async getSwitchList(){  
+				let {data}=await uni.$http.get('/api/public/banner/getAll?is_show=1&open_type=HOMETOP&start_time='+new Date().Format());
 				if(data.code!=200)return uni.$showMsg();
 				this.swiperList=data.data.map((item)=>{
 					item['src']=uni.$http.baseUrl+item['filepath']

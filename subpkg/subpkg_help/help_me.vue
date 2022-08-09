@@ -61,47 +61,6 @@
 						</view>
 					</block>
 					
-					<!-- <view class="content">
-						<block v-if="tasklist&&tasklist.length">
-							<uni-card v-for="item in tasklist" :key="item.id" :title="item.username"  :extra="extraState(item.state)" :thumbnail="thumbnail(item.user_pic)" @click="gotoitem(item.id)">
-								<view class="uni-body">
-									<view class="help-info-title">
-										<view class="iconfont icon-icon_laba_3" style="color: #55aaff;" ></view>
-										<text class="help-title">{{item.title}}
-										</text>
-										<text class="help-money">￥{{item.money}}</text>
-									</view>
-									<view class="help-info-item">
-										<view class="iconfont icon-icon_haoyou" style="color: #aaaa7f;" ></view>
-										<text class="info-left">联系人：</text>
-										<text class="info-right">{{item.task_contact}}</text>
-									</view>
-									<view class="help-info-item">
-										<view class="iconfont icon-icon_dingwei" style="color: #aaaa7f;" ></view>
-										<text class="info-left">地址：</text>
-										<text class="info-right">{{task_address(item.task_address)}}</text>
-									</view>
-									<view class="help-info-item">
-										<view class="iconfont icon-a-icon_riliricheng" style="color: #aaaa7f;" ></view>
-										<text class="info-left">时间：</text>
-										<text class="info-right">{{item.task_time}}</text>
-									</view>
-									<view class="help-info-item">
-										<view class="iconfont icon-icon_VIP" style="color: #aaaa7f;" ></view>
-										<text class="info-left">备注：</text>
-										<text class="info-right">{{item.task_remark}}</text>
-									</view>
-									<view class="help-info-item">
-										<view class="iconfont icon-icon_daojishi" style="color: #ff0000;" ></view>
-										<text class="info-left">
-											剩余时间：</text>
-										<text class="info-right">{{close_date(item.end_time)}}</text>
-									</view>
-								</view>
-							</uni-card>
-						</block> -->
-		<!-- </view> -->
-		
 	</view>
 </template>
 
@@ -168,6 +127,7 @@
 				let uid=this.token.uid;
 				if(this.pagenum*10>this.total)return uni.$showMsg('已经到底了');
 				this.pagenum+=1
+				
 				let {data}=await uni.$http.get('/api/task/getbyw?uid='+uid+"&type="+(this.type+1)+"&pagenum="+this.pagenum);
 				if(data.code!=200) return uni.$showMsg(data.message);
 				this.tasklist=[...this.tasklist,...data.data['list']]

@@ -5,7 +5,8 @@ import store from './index.js'
 	  this.socketTask = null //实例
 	  this.connectId = null //实例
 	  this.is_open_socket = false //避免重复连接
-	  this.url = 'ws://123.56.144.92:8883?connectId='+this.connectId
+	   this.url = 'ws://123.56.144.92:8883?connectId='+this.connectId
+	  // this.url = 'ws://123.56.144.92:8883?connectId='+this.connectId
 	  this.connectNum = 1 // 重连次数
 	  //心跳设置
 	  this.timeout = 15000,
@@ -19,7 +20,7 @@ import store from './index.js'
 		this.socketTask = uni.connectSocket({
 			url: this.url,
 			success: () => {
-				console.log("---建立(websocket)-----")
+				console.log("--建立(websocket)--")
 					//登录成功  获取该用户所有信息
 				store.dispatch('m_chat/getchatlist',this.connectId)
 				    // 返回实例
@@ -27,7 +28,7 @@ import store from './index.js'
 			},
 		});
 		this.socketTask.onOpen((res)=>{ //用户上线
-			console.log(this.connectId+"用户上线---------")
+			console.log(this.connectId+"用户上线--")
 			this.connectNum = 1;
 			// this.send(data) //发送我上线的消息 这里取消因为connectSocket已经触发过了一次
 			
@@ -51,7 +52,7 @@ import store from './index.js'
 	
 			// 这里仅是事件监听【如果socket关闭了会执行】
 		this.socketTask.onClose(() => {
-			console.log("掉线-------")
+			console.log("掉线--")
 			clearInterval(this.heartbeatInterval)
 			clearInterval(this.reconnectTimeOut)
 			this.is_open_socket = false;
@@ -88,7 +89,7 @@ import store from './index.js'
 			this.socketTask.send({
 					data: JSON.stringify(data),
 					async success() {
-						console.log("---消息(发出)-----")
+						console.log("--消息(发出)--")
 					},
 			});	
 				
@@ -112,7 +113,7 @@ import store from './index.js'
 		//如果不是人为关闭的话，5秒后进行重连一次
 		if (!this.is_open_socket && !this.followFlake) {
 			this.reconnectTimeOut = setInterval(() => {
-				console.log("---重连(自动断开)-----")
+				console.log("--重连(自动断开)--")
 				this.connectSocketInit(this.connectId);
 			}, 5000)
 		}
@@ -122,70 +123,3 @@ import store from './index.js'
 
 
 module.exports = socketIO
-// function init(connectId){
-// 	var heartbeatInterval=null; //检测服务器是否连接
-// 	var is_open_socket =false;//避免重复连接
-	
-// 	if(!uni.$socket){
-// 		uni.$socket=uni.connectSocket({
-// 			url:'ws://123.56.144.92:8883?connectId='+connectId,
-// 			success:(e)=>{
-// 				//登录成功  获取该用户所有信息
-// 				store.dispatch('m_chat/getchatlist',connectId)
-// 			},
-// 			fail:(e)=>{
-// 				console.log(e)
-// 			}
-// 		})
-// 		//用户打开
-// 		uni.$socket.onOpen((res)=>{
-// 			console.log("我要上线了"+connectId);
-			
-// 			//开启检测
-// 			clearInterval(heartbeatInterval)
-// 			is_open_socket = true;
-// 			start()
-// 		})
-// 		uni.$socket.onMessage(function({data}){
-// 			let params=JSON.parse(data);
-// 			if(params.type==2){ //当前在线的用户有多少
-// 				store.dispatch('m_chat/online',params.data);
-// 			}
-// 			//收到信息重新获取数据
-// 			store.dispatch('m_chat/getchatlist',connectId)
-// 		})
-// 		uni.$socket.onClose(function(res){
-// 			console.log("我要下线了"+connectId);
-// 			reconnect();
-// 		})
-// 	}
-	
-// 	function start(){
-// 		console.log("开始心脏跳动----")
-// 		heartbeatInterval = setInterval(() => {
-// 			console.log("发送消息----")
-// 			uni.sendSocketMessage({
-// 				data:0
-// 			})
-// 		}, 15000)
-// 	}
-	
-// 	function reconnect(){ //重新连接
-// 	console.log("重新连接-----")
-// 		//停止发送心跳
-// 		clearInterval(heartbeatInterval)
-// 		//如果不是人为关闭的话，进行重连
-// 		if (!is_open_socket) {
-// 			uni.$socket=uni.connectSocket({
-// 				url:'ws://123.56.144.92:8883?connectId='+connectId,
-// 				success:(e)=>{
-// 					//登录成功  获取该用户所有信息
-// 					store.dispatch('m_chat/getchatlist',connectId)
-// 				},
-// 				fail:(e)=>{
-// 					console.log(e)
-// 				}
-// 			})
-// 		}
-// 	}
-// }

@@ -41,7 +41,7 @@
 			return {
 				imageUrl:'/static/image/login.jpeg',
 				loginUser:{
-					phone:'',
+					phone:'18334652445',
 					password:''
 				}
 			};

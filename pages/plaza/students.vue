@@ -9,22 +9,6 @@
 				<view style="color: grey;">暂无好友~ 快去邀请其他同学吧~</view>
 			</view>
 		</block>
-		<!-- <view class="user-list">
-			<view class="group_wrap-item" v-for="(item,index) in userlist" :key="index">
-				<view class="letter">
-					{{item.letter}}
-				</view>
-				<view class="user-item-wrap">
-					<view class="user-item" v-for="(item2,index2) in item.data" @click="gotoUserPage(item2.uid)">
-						<view class="user-img">
-							<image :src="filepicker(item2.user_pic)" ></image>
-						</view>
-						<text class="user-name">{{item2.username}}</text>
-						<text class="user-phone">183334652443</text>
-					</view>
-				</view>
-			</view>
-		</view> -->
 	</view>
 </template>
 

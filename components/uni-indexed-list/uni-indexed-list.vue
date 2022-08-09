@@ -140,7 +140,6 @@
 		},
 		methods: {
 			refresherrefresh(e){
-				console.log(e)
 				this.triggered=true;
 				setTimeout(() =>{
 					this.$emit('refresher')

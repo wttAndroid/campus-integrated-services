@@ -142,7 +142,12 @@
 		.infoitem-left{
 			flex: 1;
 			.infor-title{
-				
+				 display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 3;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				word-break: break-all;
 			}
 			.infoitem-bottom{
 				font-size: $uni-font-size-sm;

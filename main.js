@@ -7,7 +7,10 @@ import store from './store/index.js'
 Vue.config.productionTip = false
 
 uni.$http=$http;
-uni.$http.baseUrl='http://123.56.144.92:8883'//http://localhost:3308';
+
+
+// uni.$http.baseUrl='http://127.0.0.1:8883'//http://123.56.144.92:8883';
+uni.$http.baseUrl='http://123.56.144.92:8883'//http://123.56.144.92:8883';
 
 
 $http.beforeRequest=function(options){
