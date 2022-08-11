@@ -18,7 +18,6 @@ vue后台：https://gitee.com/wttAndroid/forestmanage
 
 nodejs后端：https://gitee.com/wttAndroid/forestkoa
 
-
-![页面整合](static/icon/%E6%A0%A1%E5%9B%AD.png))
+![页面整合](static/icon/%E7%94%BB%E6%9D%BF.png)
 
 
