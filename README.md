@@ -21,3 +21,7 @@ nodejs后端：https://gitee.com/wttAndroid/forestkoa
 ![页面整合](static/icon/%E6%A0%A1%E5%9B%AD.png))
 
 
+
+#### 联系我：远程调试/二次开发/毕设
+
+![远程调试/二次开发/毕设](https://gitee.com/wttAndroid/online-learning-platform/raw/master/public/static/weixin.jpg)
